@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home - Penguin Web Studio Bug Tracker</title>
+
+<link rel="icon" type="image/png" href="/images/favicon.png" />
+<link href="/css/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+	<div id="overlay">
+	
+		<div th:fragment="baseHeader">
+			<nav class="navbar-dark bg-dark">
+	        	<div class="container-fluid">
+	        		<div class="row">
+	        			<div class="col-sm-9 p-2 d-flex overflow-hidden text-nowrap">
+	        				<div class="pe-2">
+	        					<a class="navbar-toggler border-0" href="https://penguinwebstudio.herokuapp.com/">
+			                		<span class="navbar-arrow-icon"></span>
+			                	</a>
+	        				</div>
+	        				<div class="d-flex align-items-center">
+	        					<a href="https://penguinwebstudio.herokuapp.com/">
+	        						<span class="navbar-brand-logo"></span>
+	        					</a>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
+			</nav>
+		</div>
+	
+		<div class="position-relative container-fluid px-0">
+			<header class="row p-4 g-0">
+				<h1 class="display-3">Home</h1>
+			</header>
+			<div 
+			  class="alert alert-success px-4 mb-0"
+			  th:if="${successMessage}"
+			  th:text="${successMessage}"
+			></div>
+		</div>
+		
+		<div class="row g-0">
+			<div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-light col-sm-5 col-md-4">
+			    <a href="/" class="d-flex align-items-center mb-0 me-md-auto link-dark text-decoration-none">
+			      <span class="fs-4">Actions</span>
+			    </a>
+			    <hr class="link-dark">
+			    <ul class="nav nav-pills flex-column mb-4">
+			      <li class="nav-item">
+			        <a href="/" th:class="${title}=='Open Tickets' ? 'nav-link active' : 'nav-link link-dark'">
+			          View Open Tickets
+			        </a>
+			      </li>
+			      <li class="nav-item">
+			        <a href="/closed" th:class="${title}=='Closed Tickets' ? 'nav-link active' : 'nav-link link-dark'">
+			          View Closed Tickets
+			        </a>
+			      </li>
+			      <li>
+			        <a href="/create" class="nav-link link-dark">
+			          Create Ticket
+			        </a>
+			      </li>
+			      <li>
+			        <a href="/delete" class="nav-link link-dark">
+			          Delete Ticket
+			        </a>
+			      </li>
+			     </ul>
+			     <a href="/account" class="d-flex align-items-center mb-0 me-md-auto link-dark text-decoration-none">
+			     	<span class="fs-4">Account</span>
+			     </a>
+			     <hr class="link-dark">
+			     <ul class="nav nav-pills flex-column mb-0">
+			      <li>
+			        <a href="/conversations" class="nav-link link-dark">
+			          Your Conversations
+			        </a>
+			      </li>
+			      <li>
+			        <form method="POST" th:action="@{/logout}" th:if="${loggedInAs}">
+						<button type="submit" 
+							name="logout" 
+							value="true"
+							class="nav-link link-dark w-100 text-start"
+							>Logout</button>
+					</form>
+					<a href="/account/login" class="nav-link link-dark" th:unless="${loggedInAs}">Login</a>
+			      </li>
+			    </ul>
+			</div>
+			<div class="col-sm-7 col-md-8 p-4">
+				<span class="fs-2" th:text="${title}"></span>
+				<table class="table align-middle my-4">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Created On</th>
+							<th>Severity</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="ticket : ${tickets}">
+							<td>
+								<a th:href="@{'/view/' + ${ticket.id}}" th:text="${ticket.title}"></a>
+							</td>
+							<td th:text="${#dates.format(ticket.createdOn, 'yyyy/MM/dd')}"></td>
+							<td th:text="${ticket.severity}"></td>
+							<td th:text="${ticket.status}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div th:fragment="baseFooter">
+			<footer class="navbar-dark bg-dark p-4">
+	        	<div class="container-fluid">
+	          		<div class="row">
+	            		<div class="col-sm-6 col-md-4 col-xl-3 mb-4 mb-md-0 px-2">
+	              			<h6 class="text-light">Main Pages</h6>
+	              			<ul class="nav flex-column">
+	                			<li class="nav-item">
+	                  				<a class="nav-link" href="https://penguinwebstudio.herokuapp.com/">Home</a>
+	                  			</li>
+	                			<li class="nav-item">
+	                				<a class="nav-link" href="https://penguinwebstudio.herokuapp.com/projects">Projects</a>
+	                			</li>
+	                			<li class="nav-item">
+	                				<a class="nav-link" href="https://penguinwebstudio.herokuapp.com/about">About</a>
+	                			</li>
+	                  		</ul>
+	                  	</div>
+	            		<div class="col-sm-6 col-md-4 col-xl-3 mb-4 mb-md-0 px-2">
+	            			<h6 class="text-light">Website</h6>
+	            			<ul class="nav flex-column">
+	            				<li class="nav-item">
+	            					<a class="nav-link" href="https://penguinwebstudio.herokuapp.com/website/account">Account</a>
+	            				</li>
+	            				<li class="nav-item">
+	            					<a class="nav-link" href="https://penguinwebstudio.herokuapp.com/website/settings">Settings</a>
+	            				</li>
+	                			<li class="nav-item">
+	                				<a class="nav-link" href="https://penguinwebstudio.herokuapp.com/website/cookies">Cookies</a>
+	                			</li>
+	                			<li class="nav-item">
+	                  				<a class="nav-link" href="https://penguinwebstudio.herokuapp.com/website/supported-browsers">Supported Browsers</a>
+	                			</li>
+	            			</ul>
+	            		</div>
+	            		<div class="col-md-4 col-xl-6 overflow-hidden text-nowrap text-md-end px-2">
+	            			<a class="mx-0" href="https://penguinwebstudio.herokuapp.com/">
+	                			<span class="navbar-brand-logo"></span>
+	                		</a>
+	                		<p 
+	                			class="text-muted mt-2 mb-0"
+	                			th:text="'&copy; 2020-' + ${#dates.format(#dates.createNow(), 'yyyy')}"
+	                		></p>
+	            		</div>
+	            	</div>
+	        	</div>
+	        </footer>
+        </div>
+        
+	</div>
+</body>
+
+</html>
