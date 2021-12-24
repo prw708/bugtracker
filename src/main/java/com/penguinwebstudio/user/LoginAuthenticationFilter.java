@@ -20,8 +20,8 @@ import com.penguinwebstudio.utils.RecaptchaResponse;
 
 public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	@Value("${google.recaptcha.key.testing.secret}")
-	private String recaptchaSecretKey;
+	@Value("${google.recaptcha.key.production.secret}")
+	private String recaptchaSecretKey = System.getenv().get("google.recaptcha.key.production.secret");
 	
 	@Autowired
 	Validator loginValidator;
