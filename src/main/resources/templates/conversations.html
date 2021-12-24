@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conversations - Penguin Web Studio Bug Tracker</title>
+
+<link rel="icon" type="image/png" href="/images/favicon.png" />
+<link href="/css/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+	<div id="overlay">
+	
+		<div th:replace="home :: baseHeader"></div>
+	
+		<div class="position-relative container-fluid px-0">
+			<header class="row p-4 g-0">
+				<h1 class="display-3">Your Conversations</h1>
+			</header>
+		</div>
+		
+		<div class="row g-0">
+			<div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-light col-sm-5 col-md-4">
+			    <a href="/" class="d-flex align-items-center mb-0 me-md-auto link-dark text-decoration-none">
+			      <span class="fs-4">Actions</span>
+			    </a>
+			    <hr class="link-dark">
+			    <ul class="nav nav-pills flex-column mb-4">
+			      <li class="nav-item">
+			        <a href="/" class="nav-link link-dark">
+			          View Open Tickets
+			        </a>
+			      </li>
+			      <li>
+			        <a href="/closed" class="nav-link link-dark">
+			          View Closed Tickets
+			        </a>
+			      </li>
+			      <li>
+			        <a href="/create" class="nav-link link-dark">
+			          Create Ticket
+			        </a>
+			      </li>
+			      <li>
+			        <a href="/delete" class="nav-link link-dark">
+			          Delete Ticket
+			        </a>
+			      </li>
+			     </ul>
+			     <a href="/account" class="d-flex align-items-center mb-0 me-md-auto link-dark text-decoration-none">
+			     	<span class="fs-4">Account</span>
+			     </a>
+			     <hr class="link-dark">
+			     <ul class="nav nav-pills flex-column mb-0">
+			      <li class="nav-item">
+			        <a href="/conversations" class="nav-link active">
+			          Your Conversations
+			        </a>
+			      </li>
+			      <li>
+			        <form method="POST" th:action="@{/logout}" th:if="${loggedInAs}">
+						<button type="submit" 
+							name="logout" 
+							value="true"
+							class="nav-link link-dark w-100 text-start"
+							>Logout</button>
+					</form>
+					<a href="/account/login" class="nav-link link-dark" th:unless="${loggedInAs}">Login</a>
+			      </li>
+			    </ul>
+			</div>
+			<div class="col-sm-7 col-md-8 p-4">
+				<div class="fs-2 mb-4">Latest Threads</div>
+				<div 
+					th:each="thread,threadStatus : ${threads}"
+					class="mb-4"
+				>
+					<div
+						class="mb-4"
+					>
+						<a 
+							th:href="@{/view/{ticketId}(ticketId=${thread.id})} + '#' + ${thread.index + 1}"
+							th:text='|Thread on "${thread.ticketTitle}"|'
+							class="fs-4 text-decoration-none link-dark"
+						>
+						</a>
+					</div>
+					<div 
+						th:each="comment,commentStatus : ${thread.comments}"
+						th:class="(${commentStatus.index} != 0)? 'card mb-4 ms-4' : 'card mb-4'"
+					>
+						<div class="card-body position-relative">
+							<h6 class="card-title" th:text="'Thread #' + ${thread.index + 1}"></h6>
+							<pre
+								th:text="${comment.comment}"
+								class="comment-text mb-0"
+							></pre>
+						</div>
+						<div class="card-footer">
+							<small
+								th:text="${comment.author} + ' @ ' + ${#dates.format(comment.postedOn, 'yyyy/MM/dd HH:mm:ss')}"
+								class="text-muted"
+							></small>
+						</div>
+				</div>
+			</div>
+			<p th:unless="${threads}">No conversations to display.</p>
+		</div>
+	</div>
+		
+	<div th:replace="home :: baseFooter"></div>
+		
+	</div>
+</body>
+
+</html>

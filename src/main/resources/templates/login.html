@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login - Penguin Web Studio Bug Tracker</title>
+
+<link rel="icon" type="image/png" href="/images/favicon.png" />
+<link href="/css/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+<script 
+  id="recaptchaAPI"
+  type="text/javascript"
+  src="https://www.google.com/recaptcha/api.js"
+></script>
+<script type="text/javascript" src="/js/formHandlers.js"></script>
+
+</head>
+
+<body th:object="${loginForm}">
+	<div id="overlay">
+	
+		<div th:replace="home :: baseHeader"></div>
+	
+		<div class="position-relative container-fluid px-0">
+			<header class="row p-4 g-0">
+				<h1 class="display-3">Login</h1>
+			</header>
+			<noscript>
+				<div class="alert alert-danger px-4 mb-0">Please enable JavaScript to load all elements.</div>
+			</noscript>
+			<div 
+			  class="alert alert-danger px-4 mb-0"
+			  th:if="${recaptchaError}"
+			>Invalid recaptcha.</div>
+			<div 
+			  class="alert alert-danger px-4 mb-0"
+			  th:if="${param.error}"
+			>Invalid username or password.</div>
+			<div 
+			  class="alert alert-info px-4 mb-0"
+			  th:if="${param.logout}"
+			>You are logged out.</div>
+		</div>
+		
+		<div class="row g-0">
+			<div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-light col-sm-5 col-md-4">
+			    <a href="/" class="d-flex align-items-center mb-0 me-md-auto link-dark text-decoration-none">
+			      <span class="fs-4">Actions</span>
+			    </a>
+			    <hr class="link-dark">
+			    <ul class="nav nav-pills flex-column mb-4">
+			      <li>
+			        <a href="/" class="nav-link link-dark">
+			          View Open Tickets
+			        </a>
+			      </li>
+			      <li>
+			        <a href="/closed" class="nav-link link-dark">
+			          View Closed Tickets
+			        </a>
+			      </li>
+			      <li>
+			        <a href="/create" class="nav-link link-dark">
+			          Create Ticket
+			        </a>
+			      </li>
+			      <li>
+			        <a href="/delete" class="nav-link link-dark">
+			          Delete Ticket
+			        </a>
+			      </li>
+			     </ul>
+			     <a href="/account" class="d-flex align-items-center mb-0 me-md-auto link-dark text-decoration-none">
+			     	<span class="fs-4">Account</span>
+			     </a>
+			     <hr class="link-dark">
+			     <ul class="nav nav-pills flex-column mb-0">
+			      <li>
+			        <a href="/conversations" class="nav-link link-dark">
+			          Your Conversations
+			        </a>
+			      </li>
+			      <li class="nav-item">
+			        <form method="POST" th:action="@{/logout}" th:if="${loggedInAs}">
+						<button type="submit" 
+							name="logout" 
+							value="true"
+							class="nav-link link-dark w-100 text-start"
+							>Logout</button>
+					</form>
+					<a href="/account/login" class="nav-link active" th:unless="${loggedInAs}">Login</a>
+			      </li>
+			    </ul>
+			</div>
+			<div class="col-sm-7 col-md-8 p-4">
+				<form
+		        method="POST"
+		        id="12-form"
+		        th:action="@{/account/login}"
+			    >
+			   		<div class="advanced-form mb-4">
+			       	  <label class="form-label" for="lUsername">Username</label>
+			          <input
+			            type="text"
+			            class="form-control"
+			            name="lUsername"
+			            id="lUsername"
+			            value=""
+			            maxlength="50"
+			            autocomplete="off"
+			            tabindex="-1"
+			          >
+			        </div>
+			        <div class="mb-4">
+			          <label class="form-label" for="lPhone">Username</label>
+			          <input
+			            type="text"
+			            class="form-control"
+			            value=""
+			            name="lPhone"
+			            id="lPhone"
+			            maxlength="50"
+			            autocomplete="off"
+			            th:field="*{lPhone}"
+			          >
+			        </div>
+			        <div class="mb-4">
+			          <label class="form-label" for="lField2">Password</label>
+			          <input
+			            type="password"
+			            class="form-control"
+			            value=""
+			           	name="lField2"
+			            id="lField2"
+			            maxlength="50"
+			            autocomplete="off"
+			            th:field="*{lField2}"
+			          >
+			        </div>
+			        <div class="pb-4">
+			          <button
+			            type="submit"
+			            class="btn btn-secondary mb-2 g-recaptcha"
+			            th:attr="data-sitekey=${recaptchaSiteKey}"
+			            data-callback="loginSubmit"
+			            data-action="submit"
+			          >Login</button>
+			        </div>
+				</form>
+			</div>
+		</div>
+		
+		<div th:replace="home :: baseFooter"></div>
+		
+	</div>
+</body>
+
+</html>
