@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.connection.ClusterSettings;
 import com.mongodb.connection.ConnectionPoolSettings;
 import com.mongodb.connection.ServerSettings;
@@ -35,7 +36,7 @@ public class LoggerDatabaseConfiguration extends AbstractMongoClientConfiguratio
 	@Bean(name = "log")
 	public MongoTemplate mongoTemplate() throws Exception {
 		if (this.mongoTemplate == null) {
-			this.mongoFactory = (SimpleMongoClientDatabaseFactory) this.mongoDbFactory();
+			this.mongoFactory = new SimpleMongoClientDatabaseFactory(new ConnectionString(mongoUri));
 			this.mongoTemplate = new MongoTemplate(this.mongoFactory);
 			return this.mongoTemplate;
 		} else {
