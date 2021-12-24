@@ -35,7 +35,8 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
 		loginForm.setlRecaptcha(req.getParameter("g-recaptcha-response"));
 		Errors errors = new BeanPropertyBindingResult(loginForm, "LoginForm");
 		loginValidator.validate(loginForm, errors);
-		if (errors.hasErrors() || !lUsername.isBlank()) {
+		System.out.println(errors);
+		if (errors.hasErrors() || !lUsername.isEmpty()) {
 			throw new BadCredentialsException("Invalid username or password.");
 		} else {
 			String url = "https://www.google.com/recaptcha/api/siteverify";
