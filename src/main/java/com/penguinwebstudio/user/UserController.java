@@ -24,9 +24,9 @@ import com.penguinwebstudio.tickets.TicketService;
 @Controller
 public class UserController {
 	
-	@Value("${google.recaptcha.key.testing.site}")
+	@Value("${google.recaptcha.key.production.site}")
 	private String recaptchaSiteKey;
-	@Value("${google.recaptcha.key.testing.secret}")
+	@Value("${google.recaptcha.key.production.secret}")
 	private String recaptchaSecretKey;
 	private final TicketService ticketService;
 
