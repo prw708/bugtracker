@@ -21,7 +21,7 @@ import com.mongodb.connection.ConnectionPoolSettings;
 public class TicketDatabaseConfiguration extends AbstractMongoClientConfiguration {
 	
 	@Value("${spring.data.mongodb.uri}")
-	private String mongoUri;
+	private String mongoUri = System.getenv().get("spring.data.mongodb.uri");
 	
 	private SimpleMongoClientDatabaseFactory mongoFactory;
 	private MongoTemplate mongoTemplate;
