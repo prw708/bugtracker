@@ -29,7 +29,7 @@ public class TicketDatabaseConfiguration extends AbstractMongoClientConfiguratio
 	@Bean(name = "ticket")
 	public MongoTemplate mongoTemplate() throws Exception {
 		if (this.mongoTemplate == null) {
-			this.mongoFactory = (SimpleMongoClientDatabaseFactory) this.mongoDbFactory();
+			this.mongoFactory = new SimpleMongoClientDatabaseFactory(new ConnectionString(mongoUri));
 			this.mongoTemplate = new MongoTemplate(this.mongoFactory);
 			return this.mongoTemplate;
 		} else {
