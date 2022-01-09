@@ -20,8 +20,8 @@ import com.penguinwebstudio.utils.RecaptchaResponse;
 
 public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	@Value("${google.recaptcha.key.production.secret}")
-	private String recaptchaSecretKey = System.getenv().get("google.recaptcha.key.production.secret");
+	@Value("${google.recaptcha.key.testing.secret}")
+	private String recaptchaSecretKey = System.getenv().get("google.recaptcha.key.testing.secret");
 	
 	@Autowired
 	Validator loginValidator;
@@ -35,7 +35,6 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
 		loginForm.setlRecaptcha(req.getParameter("g-recaptcha-response"));
 		Errors errors = new BeanPropertyBindingResult(loginForm, "LoginForm");
 		loginValidator.validate(loginForm, errors);
-		System.out.println(errors);
 		if (errors.hasErrors() || !lUsername.isEmpty()) {
 			throw new BadCredentialsException("Invalid username or password.");
 		} else {

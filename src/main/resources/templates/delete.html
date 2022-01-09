@@ -27,7 +27,7 @@
 	
 		<div class="position-relative container-fluid px-0">
 			<header class="row p-4 g-0">
-				<h1 class="display-3">Home</h1>
+				<h1 class="display-3">Delete Ticket</h1>
 			</header>
 			<div 
 			  class="alert alert-success px-4 mb-0"
@@ -49,7 +49,7 @@
 		</div>
 		
 		<div class="row g-0">
-			<div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-light col-sm-5 col-md-4">
+			<div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-light col-sm-5 col-md-4 col-lg-3">
 			    <a href="/" class="d-flex align-items-center mb-0 me-md-auto link-dark text-decoration-none">
 			      <span class="fs-4">Actions</span>
 			    </a>
@@ -98,7 +98,7 @@
 			      </li>
 			    </ul>
 			</div>
-			<div class="col-sm-7 col-md-8 p-4">
+			<div class="col-sm-7 col-md-8 col-lg-9 p-4">
 				<span class="fs-2">Your Tickets</span>
 				<table class="table align-middle my-4">
 					<thead>
@@ -117,7 +117,11 @@
 							<td th:text="${#dates.format(ticket.createdOn, 'yyyy/MM/dd')}"></td>
 							<td th:text="${ticket.severity}"></td>
 							<td>
-								<form method="POST" th:action="@{/delete}">
+								<form 
+									method="POST" 
+									th:attr="id=${ticket.id}"
+									th:action="@{/delete}"
+								>
 						        	<input type="hidden" name="recaptcha">
 						        	<input type="hidden" name="ticketId" th:value="${ticket.id}">
 						        	<div class="advanced-form mb-4">
