@@ -18,6 +18,14 @@ public class RecaptchaResponse {
 		this.success = success;
 	}
 	
+	public double getScore() {
+		return this.score;
+	}
+	
+	public void setScore(double score) {
+		this.score = score;
+	}
+	
 	public String getAction() {
 		return action;
 	}

@@ -50,7 +50,7 @@
 		</div>
 		
 		<div class="row g-0">
-			<div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-light col-sm-5 col-md-4">
+			<div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-light col-sm-5 col-md-4 col-lg-3">
 			    <a href="/" class="d-flex align-items-center mb-0 me-md-auto link-dark text-decoration-none">
 			      <span class="fs-4">Actions</span>
 			    </a>
@@ -99,7 +99,7 @@
 			      </li>
 			    </ul>
 			</div>
-			<div class="col-sm-7 col-md-8 pt-4 px-4">
+			<div class="col-sm-7 col-md-8 col-lg-9 pt-4 px-4">
 				<form
 		        method="POST"
 		        id="3-form"
@@ -256,8 +256,8 @@
 			            type="submit"
 			            class="btn btn-secondary mb-2 g-recaptcha"
 			            th:attr="data-sitekey=${recaptchaSiteKey}"
-			            data-callback="createSubmit"
-			            data-action="create"
+					    data-callback="createSubmit"
+					    data-action="create"
 			          >Create</button>
 			        </div>
 				</form>

@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,11 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
-import com.penguinwebstudio.tickets.TicketService;
 import com.penguinwebstudio.user.User;
 import com.penguinwebstudio.user.UserLevel;
 import com.penguinwebstudio.user.UserLevelService;
 import com.penguinwebstudio.user.UserService;
+import com.penguinwebstudio.tickets.TicketService;
 import com.penguinwebstudio.utils.HttpRequests;
 import com.penguinwebstudio.utils.RecaptchaResponse;
 
@@ -127,21 +126,26 @@ public class TicketController {
 			@NotBlank @Size(min=1, max=500) @Pattern(regexp="^[A-Za-z0-9\\-_]+$") @RequestParam(value = "g-recaptcha-response") String recaptcha,
 			RedirectAttributes attr
 	) {
+		DateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
 		String loggedInAs = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 		if (loggedInAs.equals("anonymousUser")) {
 			loggedInAs = null;
 			model.addAttribute("notLoggedInError", true);
+			model.addAttribute("loggedInAs", loggedInAs);
+			model.addAttribute("errors", null);
+			model.addAttribute("currentDateTime", dateTimeFormat.format(date));
+			model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
+			return "create";
 		}
-		DateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		if (bindingResult.hasErrors() || !createForm.getcEmail().isEmpty()) {
+		if (bindingResult.hasErrors() || !createForm.getcEmail().isEmpty()) {			
 			List<FieldError> errors = bindingResult.getFieldErrors();
 			model.addAttribute("errors", errors);
 			model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
 			model.addAttribute("loggedInAs", loggedInAs);
 			model.addAttribute("currentDateTime", dateTimeFormat.format(date));
 			return "create";
-		} else {
+		} else {			
 			String url = "https://www.google.com/recaptcha/api/siteverify";
 			String data = "secret=" + recaptchaSecretKey + "&" + "response=" + recaptcha;
 			String json = null;
@@ -154,7 +158,7 @@ public class TicketController {
 			RecaptchaResponse recaptchaResponse = g.fromJson(json, RecaptchaResponse.class);
 			if (!recaptchaResponse.isSuccess() || !recaptchaResponse.getAction().equals("create")) {
 				model.addAttribute("errors", null);
-				model.addAttribute("recaptchaError", true);
+				model.addAttribute("recaptchaError", true);		
 				model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
 				model.addAttribute("loggedInAs", loggedInAs);
 				model.addAttribute("currentDateTime", dateTimeFormat.format(date));
@@ -220,6 +224,10 @@ public class TicketController {
 		if (loggedInAs.equals("anonymousUser")) {
 			loggedInAs = null;
 			model.addAttribute("notLoggedInError", true);
+			model.addAttribute("loggedInAs", loggedInAs);
+			model.addAttribute("errors", null);
+			model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
+			return "delete";
 		}
 		List<Ticket> tickets = ticketService.getTickets(loggedInAs);
 		model.addAttribute("tickets", tickets);
@@ -296,6 +304,9 @@ public class TicketController {
 			} catch (Exception e) {
 				model.addAttribute("noTicketError", true);
 			}
+			model.addAttribute("loggedInAs", loggedInAs);
+			model.addAttribute("errors", null);
+			model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
 			return "view";
 		}
 		if (bindingResult.hasErrors() || !createForm.getcEmail().isEmpty()) {
@@ -389,6 +400,9 @@ public class TicketController {
 			} catch (Exception e) {
 				model.addAttribute("noTicketError", true);
 			}
+			model.addAttribute("loggedInAs", loggedInAs);
+			model.addAttribute("errors", null);
+			model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
 			return "view";
 		}
 		if (bindingResult.hasErrors() || !discussionForm.getdUsername().isEmpty()) {
@@ -465,6 +479,10 @@ public class TicketController {
 		if (loggedInAs.equals("anonymousUser")) {
 			loggedInAs = null;
 			model.addAttribute("notLoggedInError", true);
+			model.addAttribute("loggedInAs", loggedInAs);
+			model.addAttribute("errors", null);
+			model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
+			return "view";
 		}
 		if (bindingResult.hasErrors() || !deleteCommentForm.getdEmail().isEmpty()) {
 			try {

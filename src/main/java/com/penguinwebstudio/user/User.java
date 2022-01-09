@@ -18,6 +18,7 @@ public class User {
 	private String customerId;
 	
 	public User(String username, 
+			String password,
 			String email, 
 			Date lastLogin,
 			boolean emailConfirmed, 
@@ -25,6 +26,7 @@ public class User {
 			boolean admin, 
 			String customerId) {
 		this.setUsername(username);
+		this.setPassword(password);
 		this.setEmail(email);
 		this.setLastLogin(lastLogin);
 		this.setEmailConfirmed(emailConfirmed);

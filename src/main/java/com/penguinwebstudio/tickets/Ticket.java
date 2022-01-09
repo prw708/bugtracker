@@ -100,6 +100,10 @@ public class Ticket {
 		return this.description;
 	}
 	
+	public void setComments(ArrayList<ArrayList<Comment>> comments) {
+		this.comments = comments;
+	}
+	
 	public void addComment(int index, Comment comment) {
 		if (this.comments.isEmpty() || index >= this.comments.size()) {
 			this.comments.add(new ArrayList<Comment>());
