@@ -48,7 +48,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
 			}
 			Gson g = new Gson();
 			RecaptchaResponse recaptcha = g.fromJson(json, RecaptchaResponse.class);
-			if (!recaptcha.isSuccess() || !recaptcha.getAction().equals("submit")) {
+			if (!recaptcha.isSuccess() || recaptcha.getScore() < 0.7 || !recaptcha.getAction().equals("submit")) {
 				throw new BadCredentialsException("Invalid recaptcha.");
 			}
 		}

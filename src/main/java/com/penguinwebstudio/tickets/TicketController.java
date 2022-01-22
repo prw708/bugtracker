@@ -156,7 +156,7 @@ public class TicketController {
 			}
 			Gson g = new Gson();
 			RecaptchaResponse recaptchaResponse = g.fromJson(json, RecaptchaResponse.class);
-			if (!recaptchaResponse.isSuccess() || !recaptchaResponse.getAction().equals("create")) {
+			if (!recaptchaResponse.isSuccess() || recaptchaResponse.getScore() < 0.7 || !recaptchaResponse.getAction().equals("create")) {
 				model.addAttribute("errors", null);
 				model.addAttribute("recaptchaError", true);		
 				model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
@@ -247,7 +247,7 @@ public class TicketController {
 			}
 			Gson g = new Gson();
 			RecaptchaResponse recaptchaResponse = g.fromJson(json, RecaptchaResponse.class);
-			if (!recaptchaResponse.isSuccess() || !recaptchaResponse.getAction().equals("delete")) {
+			if (!recaptchaResponse.isSuccess() || recaptchaResponse.getScore() < 0.7 || !recaptchaResponse.getAction().equals("delete")) {
 				model.addAttribute("errors", null);
 				model.addAttribute("recaptchaError", true);
 				model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
@@ -332,7 +332,7 @@ public class TicketController {
 			}
 			Gson g = new Gson();
 			RecaptchaResponse recaptchaResponse = g.fromJson(json, RecaptchaResponse.class);
-			if (!recaptchaResponse.isSuccess() || !recaptchaResponse.getAction().equals("view")) {
+			if (!recaptchaResponse.isSuccess() || recaptchaResponse.getScore() < 0.7 || !recaptchaResponse.getAction().equals("view")) {
 				try {
 					Ticket ticket = ticketService.getTicketById(ticketId);
 					model.addAttribute("ticket", ticket);
@@ -428,7 +428,7 @@ public class TicketController {
 			}
 			Gson g = new Gson();
 			RecaptchaResponse recaptchaResponse = g.fromJson(json, RecaptchaResponse.class);
-			if (!recaptchaResponse.isSuccess() || !recaptchaResponse.getAction().equals("discussion")) {
+			if (!recaptchaResponse.isSuccess() || recaptchaResponse.getScore() < 0.7 || !recaptchaResponse.getAction().equals("discussion")) {
 				try {
 					Ticket ticket = ticketService.getTicketById(ticketId);
 					model.addAttribute("ticket", ticket);
@@ -506,7 +506,7 @@ public class TicketController {
 			}
 			Gson g = new Gson();
 			RecaptchaResponse recaptchaResponse = g.fromJson(json, RecaptchaResponse.class);
-			if (!recaptchaResponse.isSuccess() || !recaptchaResponse.getAction().equals("deleteComment")) {
+			if (!recaptchaResponse.isSuccess() || recaptchaResponse.getScore() < 0.7 || !recaptchaResponse.getAction().equals("deleteComment")) {
 				try {
 					Ticket ticket = ticketService.getTicketById(deleteCommentForm.getTicketId());
 					model.addAttribute("ticket", ticket);
