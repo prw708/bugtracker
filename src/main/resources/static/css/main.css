@@ -11605,6 +11605,11 @@ textarea.form-control-lg {
   overflow-y: scroll;
 }
 
+/* Text */
+.preserve-white-space {
+	white-space: pre-wrap;
+}
+
 /* Navbar */
 .dropdown-menu-dark .nav-link {
   padding: 0.5rem 1rem;
@@ -11750,10 +11755,6 @@ nav.dropdown-menu-dark {
   position: absolute;
   top: -2000px;
   left: -2000px;
-}
-
-.comment-text {
-  font-family: Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* Footer */
