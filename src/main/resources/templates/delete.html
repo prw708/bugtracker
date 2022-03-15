@@ -98,52 +98,54 @@
 			</div>
 			<div class="col-sm-7 col-md-8 col-lg-9 p-4">
 				<span class="fs-2">Your Tickets</span>
-				<table class="table align-middle my-4">
-					<thead>
-						<tr>
-							<th>Title</th>
-							<th>Created On</th>
-							<th>Severity</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="ticket : ${tickets}">
-							<td>
-								<a th:href="@{'/view/' + ${ticket.id}}" th:text="${ticket.title}"></a>
-							</td>
-							<td th:text="${#dates.format(ticket.createdOn, 'yyyy/MM/dd')}"></td>
-							<td th:text="${ticket.severity}"></td>
-							<td>
-								<form 
-									method="POST" 
-									th:attr="id=${ticket.id}"
-									th:action="@{/delete}"
-								>
-						        	<input type="hidden" name="recaptcha">
-						        	<input type="hidden" name="ticketId" th:value="${ticket.id}">
-						        	<div class="advanced-form mb-4">
-							       	  <label class="form-label" for="dEmail">Email</label>
-							          <input
-							            type="text"
-							            class="form-control"
-							            name="dEmail"
-							            id="dEmail"
-							            value=""
-							            maxlength="50"
-							            autocomplete="off"
-							            tabindex="-1"
-							          >
-							        </div>
-									<button type="submit" 
-										class="btn btn-sm btn-danger"
-										onclick="deleteHandler(event)"
-										>Delete</button>
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="table-responsive-sm">
+					<table class="table align-middle my-4">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Created On</th>
+								<th>Severity</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="ticket : ${tickets}">
+								<td>
+									<a th:href="@{'/view/' + ${ticket.id}}" th:text="${ticket.title}"></a>
+								</td>
+								<td th:text="${#dates.format(ticket.createdOn, 'yyyy/MM/dd')}"></td>
+								<td th:text="${ticket.severity}"></td>
+								<td>
+									<form 
+										method="POST" 
+										th:attr="id=${ticket.id}"
+										th:action="@{/delete}"
+									>
+							        	<input type="hidden" name="recaptcha">
+							        	<input type="hidden" name="ticketId" th:value="${ticket.id}">
+							        	<div class="advanced-form mb-4">
+								       	  <label class="form-label" for="dEmail">Email</label>
+								          <input
+								            type="text"
+								            class="form-control"
+								            name="dEmail"
+								            id="dEmail"
+								            value=""
+								            maxlength="50"
+								            autocomplete="off"
+								            tabindex="-1"
+								          >
+								        </div>
+										<button type="submit" 
+											class="btn btn-sm btn-danger"
+											onclick="deleteHandler(event)"
+											>Delete</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		
