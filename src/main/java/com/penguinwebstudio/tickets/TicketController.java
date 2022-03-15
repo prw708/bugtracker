@@ -123,7 +123,7 @@ public class TicketController {
 			@Valid @ModelAttribute CreateForm createForm, 
 			BindingResult bindingResult, 
 			Model model, 
-			@NotBlank @Size(min=1, max=500) @Pattern(regexp="^[A-Za-z0-9\\-_]+$") @RequestParam(value = "g-recaptcha-response") String recaptcha,
+			@NotBlank @Size(min=1, max=1000) @Pattern(regexp="^[A-Za-z0-9\\-_]+$") @RequestParam(value = "g-recaptcha-response") String recaptcha,
 			RedirectAttributes attr
 	) {
 		DateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -290,7 +290,7 @@ public class TicketController {
 			BindingResult bindingResult,
 			@ModelAttribute DiscussionForm discussionForm,
 			@Pattern(regexp="^[A-Za-z0-9]+$") @PathVariable String ticketId,
-			@NotBlank @Size(min=1, max=500) @Pattern(regexp="^[A-Za-z0-9\\-_]+$") @RequestParam(value = "g-recaptcha-response") String recaptcha,
+			@NotBlank @Size(min=1, max=1000) @Pattern(regexp="^[A-Za-z0-9\\-_]+$") @RequestParam(value = "g-recaptcha-response") String recaptcha,
 			Model model, 
 			RedirectAttributes attr
 	) {
@@ -386,7 +386,7 @@ public class TicketController {
 			BindingResult bindingResult,
 			@ModelAttribute CreateForm createForm,
 			@Pattern(regexp="^[A-Za-z0-9]+$") @PathVariable String ticketId,
-			@NotBlank @Size(min=1, max=500) @Pattern(regexp="^[A-Za-z0-9\\-_]+$") @RequestParam(value = "g-recaptcha-response") String recaptcha,
+			@NotBlank @Size(min=1, max=1000) @Pattern(regexp="^[A-Za-z0-9\\-_]+$") @RequestParam(value = "g-recaptcha-response") String recaptcha,
 			Model model, 
 			RedirectAttributes attr
 	) {

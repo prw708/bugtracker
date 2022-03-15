@@ -19,7 +19,7 @@ public class LoginForm {
 	private String lField2;
 	
 	@NotBlank
-	@Size(min=1, max=500)
+	@Size(min=1, max=1000)
 	@Pattern(regexp="^[A-Za-z0-9\\-_]+$")
 	private String lRecaptcha;
 	
