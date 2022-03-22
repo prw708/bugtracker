@@ -13,6 +13,7 @@ public class UserLevel {
 	private int maxBoards;
 	private int maxProducts;
 	private int maxTickets;
+	private int maxCards;
 	private int level;
 	private int experience;
 	private int experiencePerLevel;
@@ -24,6 +25,7 @@ public class UserLevel {
 			int maxBoards,
 			int maxProducts,
 			int maxTickets,
+			int maxCards,
 			int level,
 			int experience,
 			int experiencePerLevel) {
@@ -34,6 +36,7 @@ public class UserLevel {
 		this.setMaxBoards(maxBoards);
 		this.setMaxProducts(maxProducts);
 		this.setMaxTickets(maxTickets);
+		this.setMaxCards(maxCards);
 		this.setLevel(level);
 		this.setExperience(experience);
 		this.setExperiencePerLevel(experiencePerLevel);
@@ -101,6 +104,14 @@ public class UserLevel {
 
 	public void setMaxTickets(int max) {
 		this.maxTickets = max;
+	}
+	
+	public int getMaxCards() {
+		return this.maxCards;
+	}
+
+	public void setMaxCards(int max) {
+		this.maxCards = max;
 	}
 	
 	public int getLevel() {
