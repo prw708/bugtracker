@@ -21,9 +21,9 @@ import com.penguinwebstudio.tickets.TicketService;
 public class UserController {
 	
 	@Value("${google.recaptcha.key.production.site}")
-	private String recaptchaSiteKey = System.getenv().get("google.recaptcha.key.production.site");
+	private String recaptchaSiteKey;
 	@Value("${google.recaptcha.key.production.secret}")
-	private String recaptchaSecretKey = System.getenv().get("google.recaptcha.key.production.secret");
+	private String recaptchaSecretKey;
 	private final TicketService ticketService;
 
 	@Autowired
